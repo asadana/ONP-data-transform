@@ -10,6 +10,7 @@ public class Launcher {
 
 	private static ArrayList<DataEntry> dataEntryList;
 	private static DataEntry dataEntryObj;
+	private static ArrayList<String> tmpFeatures;
 	
 	public static void main(String[] args) {
 		System.out.println("Starting Main");
@@ -31,11 +32,16 @@ public class Launcher {
 		try {
 			br = new BufferedReader (new FileReader (folderName + "/" + fileName));
 			//while((dataLine = br.readLine()) != null) {
+			tmpFeatures = new ArrayList<String>();
 			dataLine = br.readLine();
 			String[] lineArray = dataLine.split(splitBy);
-			for (int i = 0; i<lineArray.length; i++) {
-				System.out.println(lineArray[i]);
+			dataEntryObj.setName(lineArray[0]);
+			for (int i = 1; i<lineArray.length - 1; i++) {
+				tmpFeatures.add(lineArray[i]);
 			}
+			dataEntryObj.setFeatures(tmpFeatures);
+			dataEntryObj.setLabel(lineArray[lineArray.length-1]);
+			System.out.println(dataEntryObj.getLabel());
 			//}
 			
 		} 
