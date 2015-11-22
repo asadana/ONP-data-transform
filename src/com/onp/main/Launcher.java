@@ -19,10 +19,9 @@ public class Launcher {
 		
 		Launcher objLauncher = new Launcher();
 		dataEntryList = new ArrayList<DataEntry>();
-		dataEntryObj = new DataEntry();
 		counter = 0;
 		objLauncher.loadFile();
-		//objLauncher.check();
+		objLauncher.check();
 	}
 
 	private void loadFile() {
@@ -38,6 +37,7 @@ public class Launcher {
 			System.out.println("Loading successful \n\nReading file...");
 			while((dataLine = br.readLine()) != null) {
 				counter++;
+				dataEntryObj = new DataEntry();
 				tmpFeatures = new ArrayList<String>();
 				lineArray = dataLine.split(splitBy);
 				dataEntryObj.setName(lineArray[0]);
@@ -56,10 +56,10 @@ public class Launcher {
 	}
 	
 	private void check() {
-		dataEntryObj = dataEntryList.get(0);
+		System.out.println(dataEntryList.get(0).getName());
+		dataEntryObj = dataEntryList.get(1);
 		System.out.println(dataEntryObj.getLabel());
 		dataEntryObj = dataEntryList.get(dataEntryList.size()-1);
-		System.out.println(dataEntryList.size());
 		System.out.println(dataEntryObj.getName());
 	}
 
