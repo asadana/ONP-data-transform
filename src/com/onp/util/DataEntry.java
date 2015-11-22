@@ -3,35 +3,26 @@ package com.onp.util;
 import java.util.ArrayList;
 
 public class DataEntry {
-
 	private String name;
 	private ArrayList<String> features;
-	private String shares;
+	private String label;
 	
 	public DataEntry() {
 		setName("");
 		setFeatures(new ArrayList<String>());
-		setShares("");
+		setLabel("");
 	}
 	
-	public void setDataEntry(String tmpName, ArrayList<String> tmpFeatures, String tmpShares) {
+	public void setDataEntry(String tmpName, ArrayList<String> tmpFeatures, String tmpLabel) {
 		setName(tmpName);
 		setFeatures(tmpFeatures);
-		setShares(tmpShares);
+		setLabel(tmpLabel);
 	}
 	
 	public DataEntry getDataEntry() {
 		return this;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	
 	public ArrayList<String> getFeatures() {
 		return features;
 	}
@@ -40,11 +31,19 @@ public class DataEntry {
 		this.features = features;
 	}
 
-	public String getShares() {
-		return shares;
+	public String getLabel() {
+		return label;
 	}
 
-	public void setShares(String shares) {
-		this.shares = shares;
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }
