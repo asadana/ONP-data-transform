@@ -139,10 +139,20 @@ public class Launcher {
 				}
 			}
 		}
+		
+		// from monday, next 6 columnds need to be deleted
+		deleteFeatures(featureIndex, 6);
 	}
 	
 	public void deleteFeatures(int featureIndex, int numberOfForwardDeletes) {
-		
+		System.out.println("Removing features");
+		DataEntry tmpDataEntry = dataEntryList.get(0);
+		//for(DataEntry tmpDataEntry : dataEntryList) {
+			for(int i = featureIndex + 1; i <= (featureIndex + numberOfForwardDeletes); i++) {
+				System.out.println("Feature: " + tmpDataEntry.getFeatures().get(featureIndex + 1));
+				tmpDataEntry.getFeatures().remove(featureIndex + 1);
+			}
+	//	}
 	}
 	
 	public void writeCSV() {
@@ -168,7 +178,7 @@ public class Launcher {
 		} finally {
 
 			try {
-				System.out.println("Flusing out file");
+				System.out.println("Flushing out file");
 				outputFile.flush();
 				outputFile.close();
 				System.out.println("All done");
