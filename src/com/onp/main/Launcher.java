@@ -31,6 +31,8 @@ public class Launcher {
 	private String inputFileName = "OnlineNewsPopularity.csv";
 	// Target output csv file
 	private String outputFileName = "OnlineNewsPopularity-" + System.currentTimeMillis() + ".csv";
+	// Threshold to split shares into popular or not
+	private int labelThreshold = 1400;
 	
 	// main function call
 	public static void main(String[] args) {
@@ -54,6 +56,8 @@ public class Launcher {
 		objLauncher.printPart();
 		objLauncher.check();
 		objLauncher.printPart();
+		// Replacing shares' values with yes/no
+		objLauncher.splitLabels();
 		// Writing the new database into a csv file
 		objLauncher.writeCSV();
 	}
@@ -264,6 +268,28 @@ public class Launcher {
 		
 		// from monday, next 5 columnds need to be deleted
 		deleteFeatures(featureIndex, 5);
+	}
+	
+	// Function to split shares into Yes/No
+	private void splitLabels() {
+		String yesString = "Yes";
+		String noString = "No";
+		int tmpLabel;
+		
+		for(int i = 1; i < dataEntryList.size() ; i++) {
+			dataEntryObj = dataEntryList.get(i);
+			tmpLabel = Integer.parseInt(dataEntryObj.getLabel());
+			
+			if (tmpLabel >= labelThreshold) {
+				dataEntryObj.setLabel(yesString);
+			}
+			else if (tmpLabel < labelThreshold) {
+				dataEntryObj.setLabel(noString);
+			}
+			else {
+				System.out.println("Error. Label value: " + dataEntryObj.getLabel());
+			}
+		}
 	}
 	
 	// Function to delete a set of columns by giving seed (featureIndex) and iterations (numberOfForwardDeletes)
