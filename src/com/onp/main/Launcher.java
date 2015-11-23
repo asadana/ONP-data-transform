@@ -196,9 +196,11 @@ public class Launcher {
 	
 	// Function to merge data_channel_* to data_channel
 	private void mergeDataChannel() {
-		// Variable to store 
+		// Variable to store feature of the index where we merge
 		int featureIndex = 0;
+		// Get the title entry 
 		dataEntryObj = dataEntryList.get(0);
+		// Loops through features to find data_channel_lifestyle
 		for(int i = 0; i < dataEntryObj.getFeatures().size(); i++) {
 			if(dataEntryObj.getFeatures().get(i).contains("lifestyle")) {
 				featureIndex = i;
@@ -264,6 +266,7 @@ public class Launcher {
 		deleteFeatures(featureIndex, 5);
 	}
 	
+	// Function to delete a set of columns by giving seed (featureIndex) and iterations (numberOfForwardDeletes)
 	private void deleteFeatures(int featureIndex, int numberOfForwardDeletes) {
 		System.out.println("Removing features");
 		for(DataEntry tmpDataEntry : dataEntryList) {
@@ -273,6 +276,7 @@ public class Launcher {
 		}
 	}
 	
+	// Function to write the new database into csv file
 	private void writeCSV() {
 		String splitBy = ", ";
 		FileWriter outputFile = null;
@@ -281,9 +285,12 @@ public class Launcher {
 			outputFile = new FileWriter(folderName + "/" + outputFileName);
 			System.out.println("Creating a file: " + outputFileName);
 			System.out.println("Writing to file..");
+			
+			// Traversing the dataEntryList
 			for(DataEntry tmpData : dataEntryList) {
 				outputFile.append(tmpData.getName());
 				outputFile.append(splitBy);
+				// Traversing the feature list
 				for (String tmpString : tmpData.getFeatures()) {
 					outputFile.append(tmpString);
 					outputFile.append(splitBy);
@@ -307,6 +314,7 @@ public class Launcher {
 		
 	}
 	
+	// Function to print a divider in console
 	private void printPart() {
 		System.out.println("\n\n=============================================\n\n");
 	}
