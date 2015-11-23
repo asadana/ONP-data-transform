@@ -116,9 +116,13 @@ public class Launcher {
 		System.out.println(dataEntryList.get(0).getFeatures());
 	}
 
+	// Function to merge weekday_is_* into weekdays
 	private void mergeDays() {
+		// Variable to store feature of the index where we merge
 		int featureIndex = 0;
+		// Get the title entry
 		dataEntryObj = dataEntryList.get(0);
+		// Loops through features to find weekday_is_monday
 		for(int i = 0; i < dataEntryObj.getFeatures().size(); i++) {
 			if(dataEntryObj.getFeatures().get(i).contains("monday")) {
 				featureIndex = i;
@@ -186,11 +190,13 @@ public class Launcher {
 			}
 		}
 		
-		// from monday, next 6 columnds need to be deleted
+		// from monday, next 6 columns need to be deleted
 		deleteFeatures(featureIndex, 6);
 	}
 	
+	// Function to merge data_channel_* to data_channel
 	private void mergeDataChannel() {
+		// Variable to store 
 		int featureIndex = 0;
 		dataEntryObj = dataEntryList.get(0);
 		for(int i = 0; i < dataEntryObj.getFeatures().size(); i++) {
