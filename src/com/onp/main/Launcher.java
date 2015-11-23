@@ -8,39 +8,62 @@ import java.util.ArrayList;
 
 import com.onp.util.DataEntry;
 
+/**
+ * Launcher : Main class
+ * 
+ * @author asadana
+*/
 public class Launcher {
 
+	// List to contain all data examples
 	private static ArrayList<DataEntry> dataEntryList;
+	// Temporary object to reference current DataEntry object
 	private static DataEntry dataEntryObj;
+	// Temporary object to reference current DataEntry object's features ArrayList
 	private static ArrayList<String> tmpFeatures;
-	private static String[] lineArray;
-	private static int counter;
+	// Temporary object to store and compare string
 	private String checkString;
+	
+	// Folder name in local workspace which contains the source csv file
+	// Also the folder where the new csv file will be generated
 	private String folderName = "resources";
+	// Source csv file
 	private String inputFileName = "OnlineNewsPopularity.csv";
+	// Target output csv file
 	private String outputFileName = "OnlineNewsPopularity-" + System.currentTimeMillis() + ".csv";
 	
+	// main function call
 	public static void main(String[] args) {
 		System.out.println("Starting Main");
 		
 		Launcher objLauncher = new Launcher();
 		dataEntryList = new ArrayList<DataEntry>();
-		counter = 0;
 		objLauncher.loadFile();
+		objLauncher.printPart();
 		objLauncher.check();
+		objLauncher.printPart();
 		objLauncher.mergeDays();
+		objLauncher.printPart();
+		objLauncher.check();
+		objLauncher.printPart();
+		objLauncher.mergeDataChannel();
+		objLauncher.printPart();
+		objLauncher.check();
+		objLauncher.printPart();
 		objLauncher.writeCSV();
 	}
 	
 	private void loadFile() {
 		
 		BufferedReader br = null;
+		String[] lineArray;
 		String dataLine = "";
 		String splitBy = ", ";
+		int counter = 0;
 		
 		try {
 			br = new BufferedReader (new FileReader (folderName + "/" + inputFileName));
-			System.out.println("Loading successful \n\nReading file...");
+			System.out.println("Loading successful.\nReading file...");
 			while((dataLine = br.readLine()) != null) {
 				counter++;
 				dataEntryObj = new DataEntry();
@@ -54,7 +77,7 @@ public class Launcher {
 				dataEntryObj.setLabel(lineArray[lineArray.length - 1]);
 				dataEntryList.add(dataEntryObj);
 			}
-			System.out.println("Reading complete. Number of lines read : " + counter);
+			System.out.println("Reading complete.\nNumber of lines read : " + counter);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -62,11 +85,8 @@ public class Launcher {
 	}
 	
 	private void check() {
-		/*System.out.println(dataEntryList.get(0).getName());
-		dataEntryObj = dataEntryList.get(1);
-		System.out.println(dataEntryObj.getLabel());
-		dataEntryObj = dataEntryList.get(dataEntryList.size()-1);
-		System.out.println(dataEntryObj.getName());*/
+		System.out.println("Size of the data: " + dataEntryList.size());
+		System.out.println("Number of features: " + dataEntryList.get(0).getFeatures().size());
 		System.out.println(dataEntryList.get(0).getFeatures());
 	}
 
@@ -144,15 +164,81 @@ public class Launcher {
 		deleteFeatures(featureIndex, 6);
 	}
 	
+	public void mergeDataChannel() {
+		int featureIndex = 0;
+		dataEntryObj = dataEntryList.get(0);
+		for(int i = 0; i < dataEntryObj.getFeatures().size(); i++) {
+			if(dataEntryObj.getFeatures().get(i).contains("lifestyle")) {
+				featureIndex = i;
+				System.out.println(dataEntryObj.getFeatures().get(i) + "\nFeatureIndex: " + featureIndex);
+				dataEntryObj.getFeatures().set(featureIndex, "data_channel");
+				System.out.println("Renaming data_channel_is_lifestyle to: " + dataEntryObj.getFeatures().get(i));
+			}
+		}
+		
+		/* Data_Channel key
+		 * 1 - Lifestyle
+		 * 2 - Entertainment
+		 * 3 - Business
+		 * 4 - Social media
+		 * 5 - Tech
+		 * 6 - World
+		*/
+		for(int i = 1; i < dataEntryList.size(); i ++) {
+			dataEntryObj = dataEntryList.get(i);
+			if (featureIndex != 0) {
+				// Starts on lifestyle, ends at world
+				for(int j = featureIndex + 1; j < featureIndex + 6; j++) {
+					// for Entertainment
+					if(j == featureIndex + 1) {
+						checkString = dataEntryObj.getFeatures().get(j);
+						if (checkString.compareTo("1.0") == 0) {
+							dataEntryObj.getFeatures().set(featureIndex, "2");
+						}
+					}
+					// for Business
+					if(j == featureIndex + 2) {
+						checkString = dataEntryObj.getFeatures().get(j);
+						if (checkString.compareTo("1.0") == 0) {
+							dataEntryObj.getFeatures().set(featureIndex, "3");
+						}
+					}
+					// for Social Media
+					if(j == featureIndex + 3) {
+						checkString = dataEntryObj.getFeatures().get(j);
+						if (checkString.compareTo("1.0") == 0) {
+							dataEntryObj.getFeatures().set(featureIndex, "4");
+						}
+					}
+					// for Tech
+					if(j == featureIndex + 4) {
+						checkString = dataEntryObj.getFeatures().get(j);
+						if (checkString.compareTo("1.0") == 0) {
+							dataEntryObj.getFeatures().set(featureIndex, "5");
+						}
+					}
+					// for Media
+					if(j == featureIndex + 5) {
+						checkString = dataEntryObj.getFeatures().get(j);
+						if (checkString.compareTo("1.0") == 0) {
+							dataEntryObj.getFeatures().set(featureIndex, "6");
+						}
+					}
+				}
+			}
+		}
+		
+		// from monday, next 5 columnds need to be deleted
+		deleteFeatures(featureIndex, 5);
+	}
+	
 	public void deleteFeatures(int featureIndex, int numberOfForwardDeletes) {
 		System.out.println("Removing features");
-		DataEntry tmpDataEntry = dataEntryList.get(0);
-		//for(DataEntry tmpDataEntry : dataEntryList) {
+		for(DataEntry tmpDataEntry : dataEntryList) {
 			for(int i = featureIndex + 1; i <= (featureIndex + numberOfForwardDeletes); i++) {
-				System.out.println("Feature: " + tmpDataEntry.getFeatures().get(featureIndex + 1));
 				tmpDataEntry.getFeatures().remove(featureIndex + 1);
 			}
-	//	}
+		}
 	}
 	
 	public void writeCSV() {
@@ -187,5 +273,9 @@ public class Launcher {
 			}
 		}
 		
+	}
+	
+	public void printPart() {
+		System.out.println("\n\n=============================================\n\n");
 	}
 }

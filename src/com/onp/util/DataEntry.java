@@ -2,6 +2,11 @@ package com.onp.util;
 
 import java.util.ArrayList;
 
+/**
+ * DataEntry: Class to store data examples in an ordered format
+ * 
+ * @author asadana
+ */
 public class DataEntry {
 	private String name;
 	private ArrayList<String> features;
