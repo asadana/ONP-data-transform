@@ -38,43 +38,63 @@ public class Launcher {
 		
 		Launcher objLauncher = new Launcher();
 		dataEntryList = new ArrayList<DataEntry>();
+		
+		// Loading file
 		objLauncher.loadFile();
 		objLauncher.printPart();
 		objLauncher.check();
 		objLauncher.printPart();
+		// Merging weekday_is_* into weekdays
 		objLauncher.mergeDays();
 		objLauncher.printPart();
 		objLauncher.check();
 		objLauncher.printPart();
+		// Merging data_channel_* into data_channel
 		objLauncher.mergeDataChannel();
 		objLauncher.printPart();
 		objLauncher.check();
 		objLauncher.printPart();
+		// Writing the new database into a csv file
 		objLauncher.writeCSV();
 	}
 	
+	// Function to load the source csv file
 	private void loadFile() {
 		
+		// Variable to read streams from file
 		BufferedReader br = null;
-		String[] lineArray;
+		// Temporary variable to read a line at a time
 		String dataLine = "";
+		// Temporary variable to store dataLine in parts
+		String[] lineArray;
+		// Delimeter to read the file by
 		String splitBy = ", ";
+		// Counter variable to count number of lines read
 		int counter = 0;
 		
 		try {
+			
 			br = new BufferedReader (new FileReader (folderName + "/" + inputFileName));
 			System.out.println("Loading successful.\nReading file...");
+			
+			// Read a line at a time till end of file
 			while((dataLine = br.readLine()) != null) {
 				counter++;
 				dataEntryObj = new DataEntry();
 				tmpFeatures = new ArrayList<String>();
 				lineArray = dataLine.split(splitBy);
+				
+				// First entry is the name
 				dataEntryObj.setName(lineArray[0]);
+				// Next entries before the last are the features
 				for (int i = 1; i < lineArray.length - 1; i++) {
 					tmpFeatures.add(lineArray[i]);
 				}
 				dataEntryObj.setFeatures(tmpFeatures);
+				// Last entry is the label
 				dataEntryObj.setLabel(lineArray[lineArray.length - 1]);
+				
+				// Adding the DataEntry to the list
 				dataEntryList.add(dataEntryObj);
 			}
 			System.out.println("Reading complete.\nNumber of lines read : " + counter);
@@ -84,13 +104,19 @@ public class Launcher {
 		}
 	}
 	
+	/*
+	 *  Function to display,
+	 		*	the size of the dataset
+	 		*	the number of features 
+	 		*	names of the features
+	 */
 	private void check() {
 		System.out.println("Size of the data: " + dataEntryList.size());
 		System.out.println("Number of features: " + dataEntryList.get(0).getFeatures().size());
 		System.out.println(dataEntryList.get(0).getFeatures());
 	}
 
-	public void mergeDays() {
+	private void mergeDays() {
 		int featureIndex = 0;
 		dataEntryObj = dataEntryList.get(0);
 		for(int i = 0; i < dataEntryObj.getFeatures().size(); i++) {
@@ -164,7 +190,7 @@ public class Launcher {
 		deleteFeatures(featureIndex, 6);
 	}
 	
-	public void mergeDataChannel() {
+	private void mergeDataChannel() {
 		int featureIndex = 0;
 		dataEntryObj = dataEntryList.get(0);
 		for(int i = 0; i < dataEntryObj.getFeatures().size(); i++) {
@@ -232,7 +258,7 @@ public class Launcher {
 		deleteFeatures(featureIndex, 5);
 	}
 	
-	public void deleteFeatures(int featureIndex, int numberOfForwardDeletes) {
+	private void deleteFeatures(int featureIndex, int numberOfForwardDeletes) {
 		System.out.println("Removing features");
 		for(DataEntry tmpDataEntry : dataEntryList) {
 			for(int i = featureIndex + 1; i <= (featureIndex + numberOfForwardDeletes); i++) {
@@ -241,7 +267,7 @@ public class Launcher {
 		}
 	}
 	
-	public void writeCSV() {
+	private void writeCSV() {
 		String splitBy = ", ";
 		FileWriter outputFile = null;
 		try {
@@ -275,7 +301,7 @@ public class Launcher {
 		
 	}
 	
-	public void printPart() {
+	private void printPart() {
 		System.out.println("\n\n=============================================\n\n");
 	}
 }
