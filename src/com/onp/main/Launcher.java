@@ -28,8 +28,8 @@ public class Launcher {
 		counter = 0;
 		objLauncher.loadFile();
 		objLauncher.check();
-		//objLauncher.mergeDays();
-		//objLauncher.writeCSV();
+		objLauncher.mergeDays();
+		objLauncher.writeCSV();
 	}
 	
 	private void loadFile() {
@@ -90,6 +90,20 @@ public class Launcher {
 						checkString = dataEntryObj.getFeatures().get(j);
 						if (checkString.compareTo("1.0") == 0) {
 							dataEntryObj.getFeatures().set(featureIndex, "2");
+						}
+					}
+					// for Wednesday
+					if(j == featureIndex + 2) {
+						checkString = dataEntryObj.getFeatures().get(j);
+						if (checkString.compareTo("1.0") == 0) {
+							dataEntryObj.getFeatures().set(featureIndex, "3");
+						}
+					}
+					// for Thursday
+					if(j == featureIndex + 3) {
+						checkString = dataEntryObj.getFeatures().get(j);
+						if (checkString.compareTo("1.0") == 0) {
+							dataEntryObj.getFeatures().set(featureIndex, "4");
 						}
 					}
 				}
