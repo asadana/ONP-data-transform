@@ -77,9 +77,18 @@ public class Launcher {
 			if(dataEntryObj.getFeatures().get(i).contains("monday")) {
 				featureIndex = i;
 				System.out.println(dataEntryObj.getFeatures().get(i) + "\nFeatureIndex: " + featureIndex);
+				dataEntryObj.getFeatures().set(featureIndex, "weekday");
+				System.out.println("Renaming weekday_is_monday to: " + dataEntryObj.getFeatures().get(i));
 			}
 		}
 		
+		/* Weekday key
+		 * 1 - Monday
+		 * 2 - Tuesday
+		 * 3 - Wednesday
+		 * ..
+		 * 7 - Sunday
+		*/
 		for(int i = 1; i < dataEntryList.size(); i ++) {
 			dataEntryObj = dataEntryList.get(i);
 			if (featureIndex != 0) {
@@ -106,9 +115,34 @@ public class Launcher {
 							dataEntryObj.getFeatures().set(featureIndex, "4");
 						}
 					}
+					// for Friday
+					if(j == featureIndex + 4) {
+						checkString = dataEntryObj.getFeatures().get(j);
+						if (checkString.compareTo("1.0") == 0) {
+							dataEntryObj.getFeatures().set(featureIndex, "5");
+						}
+					}
+					// for Saturday
+					if(j == featureIndex + 5) {
+						checkString = dataEntryObj.getFeatures().get(j);
+						if (checkString.compareTo("1.0") == 0) {
+							dataEntryObj.getFeatures().set(featureIndex, "6");
+						}
+					}
+					// for Sunday
+					if(j == featureIndex + 6) {
+						checkString = dataEntryObj.getFeatures().get(j);
+						if (checkString.compareTo("1.0") == 0) {
+							dataEntryObj.getFeatures().set(featureIndex, "7");
+						}
+					}
 				}
 			}
 		}
+	}
+	
+	public void deleteFeatures(int featureIndex, int numberOfForwardDeletes) {
+		
 	}
 	
 	public void writeCSV() {
