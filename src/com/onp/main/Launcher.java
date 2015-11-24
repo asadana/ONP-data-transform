@@ -57,7 +57,7 @@ public class Launcher {
 		objLauncher.check();
 		objLauncher.printPart();
 		// Replacing shares' values with yes/no
-		objLauncher.splitLabels();
+		//objLauncher.splitLabels();
 		// Writing the new database into a csv file
 		objLauncher.writeCSV();
 	}
@@ -136,58 +136,59 @@ public class Launcher {
 			}
 		}
 		
-		/* Weekday key
-		 * 1 - Monday
-		 * 2 - Tuesday
-		 * 3 - Wednesday
-		 * ..
-		 * 7 - Sunday
-		*/
+		// For every 1 in weekday_* column, the name of the day is added in the first column
 		for(int i = 1; i < dataEntryList.size(); i ++) {
 			dataEntryObj = dataEntryList.get(i);
 			if (featureIndex != 0) {
 				// Starts on monday, ends at sunday
-				for(int j = featureIndex + 1; j < featureIndex + 7; j++) {
+				for(int j = featureIndex; j < featureIndex + 7; j++) {
+					// for Monday
+					if(j == featureIndex) {
+						checkString = dataEntryObj.getFeatures().get(j);
+						if (checkString.compareTo("1.0") == 0) {
+							dataEntryObj.getFeatures().set(featureIndex, "Monday");
+						}
+					}
 					// for Tuesday
 					if(j == featureIndex + 1) {
 						checkString = dataEntryObj.getFeatures().get(j);
 						if (checkString.compareTo("1.0") == 0) {
-							dataEntryObj.getFeatures().set(featureIndex, "2");
+							dataEntryObj.getFeatures().set(featureIndex, "Tuesday");
 						}
 					}
 					// for Wednesday
 					if(j == featureIndex + 2) {
 						checkString = dataEntryObj.getFeatures().get(j);
 						if (checkString.compareTo("1.0") == 0) {
-							dataEntryObj.getFeatures().set(featureIndex, "3");
+							dataEntryObj.getFeatures().set(featureIndex, "Wednesday");
 						}
 					}
 					// for Thursday
 					if(j == featureIndex + 3) {
 						checkString = dataEntryObj.getFeatures().get(j);
 						if (checkString.compareTo("1.0") == 0) {
-							dataEntryObj.getFeatures().set(featureIndex, "4");
+							dataEntryObj.getFeatures().set(featureIndex, "Thursday");
 						}
 					}
 					// for Friday
 					if(j == featureIndex + 4) {
 						checkString = dataEntryObj.getFeatures().get(j);
 						if (checkString.compareTo("1.0") == 0) {
-							dataEntryObj.getFeatures().set(featureIndex, "5");
+							dataEntryObj.getFeatures().set(featureIndex, "Friday");
 						}
 					}
 					// for Saturday
 					if(j == featureIndex + 5) {
 						checkString = dataEntryObj.getFeatures().get(j);
 						if (checkString.compareTo("1.0") == 0) {
-							dataEntryObj.getFeatures().set(featureIndex, "6");
+							dataEntryObj.getFeatures().set(featureIndex, "Saturday");
 						}
 					}
 					// for Sunday
 					if(j == featureIndex + 6) {
 						checkString = dataEntryObj.getFeatures().get(j);
 						if (checkString.compareTo("1.0") == 0) {
-							dataEntryObj.getFeatures().set(featureIndex, "7");
+							dataEntryObj.getFeatures().set(featureIndex, "Sunday");
 						}
 					}
 				}
@@ -214,52 +215,55 @@ public class Launcher {
 			}
 		}
 		
-		/* Data_Channel key
-		 * 1 - Lifestyle
-		 * 2 - Entertainment
-		 * 3 - Business
-		 * 4 - Social media
-		 * 5 - Tech
-		 * 6 - World
-		*/
+		// For every 1 in data_channel_* column, the name of the data channel is added in the first column
 		for(int i = 1; i < dataEntryList.size(); i ++) {
 			dataEntryObj = dataEntryList.get(i);
 			if (featureIndex != 0) {
 				// Starts on lifestyle, ends at world
-				for(int j = featureIndex + 1; j < featureIndex + 6; j++) {
+				for(int j = featureIndex; j < featureIndex + 6; j++) {
+					// for Lifestyle
+					if(j == featureIndex) {
+						checkString = dataEntryObj.getFeatures().get(j);
+						if (checkString.compareTo("1.0") == 0) {
+							dataEntryObj.getFeatures().set(featureIndex, "Lifestyle");
+						}
+						else if (checkString.compareTo("0.0") == 0) {
+							dataEntryObj.getFeatures().set(featureIndex, "Unknown");
+						}
+					}
 					// for Entertainment
 					if(j == featureIndex + 1) {
 						checkString = dataEntryObj.getFeatures().get(j);
 						if (checkString.compareTo("1.0") == 0) {
-							dataEntryObj.getFeatures().set(featureIndex, "2");
+							dataEntryObj.getFeatures().set(featureIndex, "Entertainment");
 						}
 					}
 					// for Business
 					if(j == featureIndex + 2) {
 						checkString = dataEntryObj.getFeatures().get(j);
 						if (checkString.compareTo("1.0") == 0) {
-							dataEntryObj.getFeatures().set(featureIndex, "3");
+							dataEntryObj.getFeatures().set(featureIndex, "Business");
 						}
 					}
 					// for Social Media
 					if(j == featureIndex + 3) {
 						checkString = dataEntryObj.getFeatures().get(j);
 						if (checkString.compareTo("1.0") == 0) {
-							dataEntryObj.getFeatures().set(featureIndex, "4");
+							dataEntryObj.getFeatures().set(featureIndex, "SocialMedia");
 						}
 					}
 					// for Tech
 					if(j == featureIndex + 4) {
 						checkString = dataEntryObj.getFeatures().get(j);
 						if (checkString.compareTo("1.0") == 0) {
-							dataEntryObj.getFeatures().set(featureIndex, "5");
+							dataEntryObj.getFeatures().set(featureIndex, "Technology");
 						}
 					}
-					// for Media
+					// for World
 					if(j == featureIndex + 5) {
 						checkString = dataEntryObj.getFeatures().get(j);
 						if (checkString.compareTo("1.0") == 0) {
-							dataEntryObj.getFeatures().set(featureIndex, "6");
+							dataEntryObj.getFeatures().set(featureIndex, "World");
 						}
 					}
 				}
