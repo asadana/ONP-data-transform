@@ -314,8 +314,10 @@ public class Launcher {
 			
 			// Traversing the dataEntryList
 			for(DataEntry tmpData : dataEntryList) {
-				outputFile.append(tmpData.getName());
-				outputFile.append(splitBy);
+				// commented out Name to remove URL column
+				//outputFile.append(tmpData.getName());
+				//outputFile.append(splitBy);
+				
 				// Traversing the feature list
 				for (String tmpString : tmpData.getFeatures()) {
 					outputFile.append(tmpString);
