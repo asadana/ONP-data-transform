@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import com.onp.util.DataEntry;
 
 /**
- * Launcher : Main class
+ * Launcher : Main class to parse and transform our database
  * 
- * @author asadana
+ * Project: Online News Popularity
+ * Class: I-590 (Fall 2015)
+ * @author asadana, voraj
 */
 public class Launcher {
 
@@ -57,7 +59,7 @@ public class Launcher {
 		objLauncher.check();
 		objLauncher.printPart();
 		// Replacing shares' values with yes/no
-		//objLauncher.splitLabels();
+		objLauncher.splitLabels();
 		// Writing the new database into a csv file
 		objLauncher.writeCSV();
 	}

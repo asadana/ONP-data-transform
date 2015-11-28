@@ -5,18 +5,23 @@ import java.util.ArrayList;
 /**
  * DataEntry: Class to store data examples in an ordered format
  * 
- * @author asadana
+ * Project: Online News Popularity
+ * Class: I-590 (Fall 2015)
+ * @author asadana, voraj
  */
 public class DataEntry {
 	private String name;
 	private ArrayList<String> features;
 	private String label;
 	
+	// Constructor to initialize all variables
 	public DataEntry() {
 		setName("");
 		setFeatures(new ArrayList<String>());
 		setLabel("");
 	}
+	
+	// set and get methods
 	
 	public void setDataEntry(String tmpName, ArrayList<String> tmpFeatures, String tmpLabel) {
 		setName(tmpName);
