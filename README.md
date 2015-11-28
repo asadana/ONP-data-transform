@@ -6,6 +6,8 @@ Online News Popularity Project for I590
 
 This is a JAVA parser program to read and transform the [Online News Popularity Database](https://archive.ics.uci.edu/ml/datasets/Online+News+Popularity) in order to reduce and transform the feature columns to make the plots more readable and interpretable for our Project.
 
+The R scripts used to create models over this database and generate plots to analyze can be found here : [Online-News-Popularity](https://github.com/voraj/Online-News-Popularity)
+
 Need to know things:
 -------------
 1. The program expects to find the dataset in resources/ folder
